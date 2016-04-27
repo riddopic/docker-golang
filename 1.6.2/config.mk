@@ -1,0 +1,3 @@
+
+export GOLANG_VERSION = 1.6.2
+export GOLANG_SHA = b8318b09de06076d5397e6ec18ebef3b45cd315d
