@@ -1,6 +1,8 @@
 
 # [<img src=".bluebeluga.png" height="100" width="200" style="border-radius: 50%;" alt="@fancyremarker" />](https://github.com/riddopic/docker-golang) bluebeluga/golang
 
+[![Circle CI](http://circle.bluebeluga.io/gh/riddopic/docker-golang.svg?style=svg)](http://circle.bluebeluga.io/gh/riddopic/docker-golang)
+
 The Go programming language, on Docker.
 
 ## Installation and Usage
