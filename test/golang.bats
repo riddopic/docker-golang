@@ -4,32 +4,32 @@ setup() {
   docker history "$REGISTRY/$REPOSITORY:$TAG" >/dev/null 2>&1
   export IMG="$REGISTRY/$REPOSITORY:$TAG"
   export GOLANG_VERSION=$GOLANG_VERSION
+  export MAX_SIZE=2000000
 }
 
 @test "checking image size" {
-  MAX_SIZE=20000
-  run docker run "bluebeluga/alpine:3.2" bash -c "[[ \"\$(du -d0 / 2>/dev/null | awk '{print \$1; print > \"/dev/stderr\"}')\" -lt \"$MAX_SIZE\" ]]"
+  run docker run $IMG bash -c "[[ \"\$(du -d0 / 2>/dev/null | awk '{print \$1; print > \"/dev/stderr\"}')\" -lt \"$MAX_SIZE\" ]]"
   [ $status -eq 0 ]
 }
 
 @test "It should use Go ${GOLANG_VERSION}" {
-  go_version_string="$(echo "go${GOLANG_VERSION}")"
-  go version | grep "${go_version_string}"
+  run docker run $IMG go_version_string="$(echo "go${GOLANG_VERSION}")"
+  run docker run $IMG go version | grep "${go_version_string}"
 }
 
 @test "It should download Go code" {
-  go get -d github.com/hoisie/mustache
+  run docker run $IMG go get -d github.com/hoisie/mustache
 }
 
 @test "It should test Go code" {
-  go test github.com/hoisie/mustache
+  run docker run $IMG go test github.com/hoisie/mustache
 }
 
 @test "It should build Go code" {
-  go get github.com/deis/example-go
-  go build github.com/deis/example-go
+  run docker run $IMG go get github.com/deis/example-go
+  run docker run $IMG go build github.com/deis/example-go
 }
 
 @test "It should generate a Go executable" {
-  [[ -x ${GOPATH}/bin/example-go ]]
+  run docker run $IMG bash -c "[[ -x ${GOPATH}/bin/example-go ]]"
 }
