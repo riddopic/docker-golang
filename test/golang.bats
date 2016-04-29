@@ -12,24 +12,22 @@ setup() {
   [ $status -eq 0 ]
 }
 
-@test "It should use Go ${GOLANG_VERSION}" {
-  run docker run $IMG go_version_string="$(echo "go${GOLANG_VERSION}")"
-  run docker run $IMG go version | grep "${go_version_string}"
+@test "It should use Go $GOLANG_VERSION" {
+  run docker run $IMG bash -c "go version | grep $GOLANG_VERSION"
+  [ $status -eq 0 ]
 }
 
 @test "It should download Go code" {
-  run docker run $IMG go get -d github.com/hoisie/mustache
-}
-
-@test "It should test Go code" {
-  run docker run $IMG go test github.com/hoisie/mustache
+  run docker run $IMG bash -c "go get github.com/hoisie/mustache"
+  [ $status -eq 0 ]
 }
 
 @test "It should build Go code" {
-  run docker run $IMG go get github.com/deis/example-go
-  run docker run $IMG go build github.com/deis/example-go
+  run docker run $IMG bash -c "go get github.com/deis/example-go && go build github.com/deis/example-go"
+  [ $status -eq 0 ]
 }
 
-@test "It should generate a Go executable" {
-  run docker run $IMG bash -c "[[ -x ${GOPATH}/bin/example-go ]]"
+@test "It should test Go code" {
+  run docker run $IMG bash -c "go get github.com/hoisie/mustache && go test github.com/hoisie/mustache"
+  [ $status -eq 0 ]
 }

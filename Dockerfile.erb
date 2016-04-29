@@ -7,7 +7,7 @@ RUN apk-install bash ca-certificates libgcc openssl curl openssh-client git make
 ENV GITLAB_RUNNER_DIR /etc/gitlab-runner
 
 ENV GOLANG_VERSION <%= ENV.fetch('GOLANG_VERSION') %>
-ENV GOLANG_SHA <%= ENV.fetch('GOLANG_SHA') %>
+ENV GOLANG_SHA1 <%= ENV.fetch('GOLANG_SHA1') %>
 
 ENV GOLANG_BOOTSTRAP_VERSION 1.4.3
 ENV GOLANG_BOOTSTRAP_SHA 486db10dc571a55c8d795365070f66d343458c48
@@ -27,7 +27,7 @@ RUN set -ex \
  && export GOROOT_BOOTSTRAP=/usr/local/bootstrap/go \
  #
  && curl -fsSL https://golang.org/dl/go${GOLANG_VERSION}.linux-amd64.tar.gz -o golang.tar.gz \
- && echo "${GOLANG_SHA}  golang.tar.gz" | sha1sum -c - \
+ && echo "${GOLANG_SHA1}  golang.tar.gz" | sha1sum -c - \
  && tar -C /usr/local -xzf golang.tar.gz \
  && rm golang.tar.gz \
  && cd /usr/local/go/src \
