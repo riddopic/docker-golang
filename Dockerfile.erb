@@ -13,7 +13,6 @@ ENV GOLANG_BOOTSTRAP_VERSION 1.4.3
 ENV GOLANG_BOOTSTRAP_SHA 486db10dc571a55c8d795365070f66d343458c48
 
 COPY files/no-pic.patch /
-COPY test /tmp/test
 
 RUN set -ex \
  && apk-install --no-cache --virtual .build-deps gcc musl-dev openssl \
