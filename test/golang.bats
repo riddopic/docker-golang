@@ -1,7 +1,9 @@
 #!/usr/bin/env bats
 
 setup() {
-  docker history "bluebeluga/alpine:3.2" >/dev/null 2>&1
+  docker history "$REGISTRY/$REPOSITORY:$TAG" >/dev/null 2>&1
+  export IMG="$REGISTRY/$REPOSITORY:$TAG"
+  export GOLANG_VERSION=$GOLANG_VERSION
 }
 
 @test "checking image size" {
